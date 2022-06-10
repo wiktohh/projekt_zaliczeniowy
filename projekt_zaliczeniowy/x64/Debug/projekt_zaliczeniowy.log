@@ -1,0 +1,8 @@
+﻿  database.cpp
+  main.cpp
+  Generowanie kodu...
+  shell.c
+  sqlite3.c
+  Generowanie kodu...
+LINK : warning LNK4067: niejednoznaczny punkt wejścia; wybrano „mainCRTStartup”
+  projekt_zaliczeniowy.vcxproj -> E:\projekt_zaliczeniowy\x64\Debug\projekt_zaliczeniowy.exe
