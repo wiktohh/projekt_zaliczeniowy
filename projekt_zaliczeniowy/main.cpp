@@ -2,7 +2,6 @@
 #include "database.h"
 #include <conio.h>
 #include <stdlib.h>
-#include <windows.h>
 
 int main()
 {
@@ -11,6 +10,8 @@ int main()
 	Database db;
 	std::cout << "Menedzer hasel\n\n1.Zaloguj sie\n2.Zarejestruj sie\n";
 	choice = _getch();
+
+	
 	switch (choice)
 	{
 	case '1':
@@ -37,8 +38,9 @@ int main()
 		system("cls");
 		while (true)
 		{
-			std::cout << "Menedzer hasel\n\n1.Dodaj haslo\n2.Usun haslo\n3.Wyswietl wszystki hasla\n4.Zamknij program\n";
+			std::cout << "Menedzer hasel\n\n1.Dodaj haslo\n2.Usun haslo\n3.Wyswietl wszystkie hasla\n4.Wyswietl haslo po id lub nazwie\n5.Zamknij program\n";
 			choice = _getch();
+			std::cout << "------------------------------------------------------------" << std::endl;
 			switch (choice)
 			{
 			case '1':
@@ -51,12 +53,17 @@ int main()
 				db.selectData();
 				break;
 			case '4':
+				db.selectOne();
+				break;
+			case '5':
 				exit(1);
 
 			default:
 				std::cout << "Nieprawidlowy znak\n";
 				break;
 			}
+			std::cout << "------------------------------------------------------------" << std::endl;
+			std::cout << "Nacisnij Enter aby kontynuowac" << std::endl;
 			_getch();
 			system("cls");
 			
