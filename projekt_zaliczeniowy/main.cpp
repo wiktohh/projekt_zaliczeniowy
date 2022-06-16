@@ -3,60 +3,78 @@
 #include <conio.h>
 #include <stdlib.h>
 
+
+bool confirmation() {
+	std::cout << "------------------------------------------------------------\n";
+	cout << "Czy napewno chcesz kontynuowac(y / n)?\n";
+	std::cout << "------------------------------------------------------------\n";
+	char choice;
+	choice = _getch();
+	switch (choice)
+	{
+	case 'y':
+		return true;
+		break;
+	case 'Y':
+		return true;
+		break;
+	default:
+		return false;
+		break;
+	}
+}
+
+
 int main()
 {
+
 	char choice{};
 	int attempts = 1;
 	Database db;
-	std::cout << "Menedzer hasel\n\n1.Zaloguj sie\n2.Zarejestruj sie\n";
-	choice = _getch();
+	db.menuToDatabase();
 
-	
-	switch (choice)
-	{
-	case '1':
-		do {
-			if (!db.logged && attempts > 1) std::cout << "\nNieprawidlowe dane\n";
-			db.loginToAccount();
-			attempts++;
-		} while (db.logged != true);
-		break;
-	case '2':
-		do {
-			if (!db.registered && attempts > 1) std::cout << "\nLogin jest juz zajety\n";
-			db.createAccount();
-			attempts++;
-		} while (db.registered != true);
-		break;
-	default:
-		std::cout << "Nieprawidlowy znak\n";
-		break;
-	}
-
-	if (db.logged  || db.registered) 
+	if (db.logged || db.registered)
 	{
 		system("cls");
 		while (true)
 		{
-			std::cout << "Menedzer hasel\n\n1.Dodaj haslo\n2.Usun haslo\n3.Wyswietl wszystkie hasla\n4.Wyswietl haslo po id lub nazwie\n5.Zamknij program\n";
+			std::cout << "-----------------------" << std::endl;
+			std::cout << "MENADZER HASEL" << std::endl;
+			std::cout << "-----------------------" << std::endl;
+			std::cout << std::endl;
+			std::cout << "Nacisnij 1-6 aby wykonac akcje" << std::endl;
+			std::cout << "\n1.Dodaj haslo\n2.Usun haslo\n3.Zmien Haslo\n4.Wyswietl wszystkie hasla\n5.Wyswietl haslo po id lub nazwie\n6.Zamknij program\n";
+		
 			choice = _getch();
-			std::cout << "------------------------------------------------------------" << std::endl;
+
 			switch (choice)
 			{
 			case '1':
-				db.insertData();
+				if (confirmation()) {
+					db.insertData();
+				}
 				break;
 			case '2':
-				db.deleteData();
+				if (confirmation()) {
+					db.deleteData();
+				}
 				break;
 			case '3':
-				db.selectData();
+				if (confirmation()) {
+					db.changePassword();
+				}
 				break;
 			case '4':
-				db.selectOne();
+				db.selectData();
 				break;
 			case '5':
+				if (confirmation()) {
+					db.selectOne();
+				}
+				break;
+			case '6':if (confirmation()) {
 				exit(1);
+			}
 
 			default:
 				std::cout << "Nieprawidlowy znak\n";
@@ -66,9 +84,9 @@ int main()
 			std::cout << "Nacisnij Enter aby kontynuowac" << std::endl;
 			_getch();
 			system("cls");
-			
+
+
 		}
 	}
 	system("pause");
 }
-//todo sql incjector, system cls, walidacja XD

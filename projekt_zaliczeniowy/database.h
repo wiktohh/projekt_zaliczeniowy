@@ -20,8 +20,10 @@ public:
 	void insertData();
 	void selectData();
 	void selectOne();
+	void changePassword();
 	void createAccount();
 	void loginToAccount();
+	void menuToDatabase();
 
 	Database();
 	~Database();

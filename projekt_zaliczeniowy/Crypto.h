@@ -17,6 +17,10 @@ public:
 	std::string encrypt(std::string text);
 	std::string decrypt(std::string text);
 
+	std::string base64_encode(std::string input);
+
+	std::string base64_decode(std::string input);
+
 	Crypto();
 	~Crypto();
 };
