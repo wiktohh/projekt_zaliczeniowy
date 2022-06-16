@@ -2,7 +2,7 @@
 #include "sqlite/sqlite3.h"
 #include <iostream>
 #include <fstream> 
-
+#include <conio.h>
 static int callback(void* NotUsed, int argc, char** argv, char** azColName);
 static int callback2(void* NotUsed, int argc, char** argv, char** azColName);
 bool isUser = false;
@@ -119,9 +119,7 @@ void Database::changePassword() {
 
 	int ret = sqlite3_step(stmt);
 
-	std::cout << sqlite3_errmsg(db);
-
-	if (ret != SQLITE_DONE ) {
+	if (ret != SQLITE_DONE || sqlite3_changes(db) == 0) {
 		std::cerr << "Nie udalo sie zmienic.\n";
 	}
 	else
@@ -282,6 +280,68 @@ Database::~Database()
 	sqlite3_close(db);
 }
 
+void Database::menuToDatabase() {
+
+	char choice{};
+	int attempts = 1;
+	sqlite3_stmt* stmt2;
+	const char* ozTest2;
+	string valid = "select * from users; ";
+	sqlite3_prepare_v2(db, valid.c_str(), valid.length(), &stmt2, &ozTest2);
+	int rows_count = 0;
+
+	while (sqlite3_step(stmt2) == SQLITE_ROW)
+	{
+		rows_count++;
+	}
+
+	if (rows_count > 0) {
+		std::cout << "Menedzer hasel\n\n1.Zaloguj sie\n2.Zarejestruj sie\n";
+		choice = _getch();
+
+		switch (choice)
+		{
+		case '1':
+			do {
+				if (!logged && attempts > 1) std::cout << "\nNieprawidlowe dane\n";
+				loginToAccount();
+				attempts++;
+			} while (logged != true);
+			break;
+		case '2':
+			do {
+				createAccount();
+				attempts++;
+			} while (registered != true);
+			break;
+		default:
+			std::cout << "Nieprawidlowy znak\n";
+			break;
+		}
+	}
+	else {
+		std::cout << "Menedzer hasel\n\n1.Zarejestruj sie\n";
+		choice = _getch();
+
+		switch (choice)
+		{
+		case '1':
+			do {
+				createAccount();
+				attempts++;
+			} while (registered != true);
+			break;
+		default:
+			std::cout << "Nieprawidlowy znak\n";
+			break;
+		}
+	}
+
+
+
+
+
+}
 
 static int callback(void* NotUsed, int argc, char** argv, char** azColName)
 {

@@ -23,6 +23,7 @@ public:
 	void changePassword();
 	void createAccount();
 	void loginToAccount();
+	void menuToDatabase();
 
 	Database();
 	~Database();
